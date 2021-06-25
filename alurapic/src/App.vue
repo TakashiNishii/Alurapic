@@ -14,19 +14,18 @@ export default {
   data() {
     return {
       titulo: "Alurapic",
-      fotos: [
-        {
-          url:
-            "https://www.dicaspetz.com.br/wp-content/uploads/2020/09/ibuprofeno-para-cachorro-pet.jpg",
-          titulo: "cachorro"
-        },
-        {
-          url:
-            "https://www.dicaspetz.com.br/wp-content/uploads/2020/09/ibuprofeno-para-cachorro-pet.jpg",
-          titulo: "Cachorrão"
-        }
-      ]
+      fotos: []
     };
+  },
+
+  created() {
+    this.$http
+      .get("http://localhost:3000/v1/fotos")
+      .then(res => res.json())
+      .then(
+        fotos => (this.fotos = fotos),
+        err => console.log(err)
+      );
   }
 };
 </script>
