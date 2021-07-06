@@ -5,6 +5,8 @@ import VueRouter from 'vue-router';
 //Esse tem nome diferente por não ser export default que temos em routes.js
 import {routes} from './routes';
 
+import './directives/Transform';
+
 Vue.use(VueResource);
 Vue.use(VueRouter);
 
