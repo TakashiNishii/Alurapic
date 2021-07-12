@@ -6,6 +6,7 @@ import VueRouter from 'vue-router';
 import {routes} from './routes';
 
 import './directives/Transform';
+import { ValidationProvider, extend, ValidationObserver } from 'vee-validate';
 
 Vue.use(VueResource);
 Vue.http.options.root = 'http://localhost:3000';
@@ -19,6 +20,29 @@ const router = new VueRouter({
   mode: 'history' 
 });
 
+
+extend('required', {
+  validate (value) {
+    return {
+      required: true,
+      valid: ['', null, undefined].indexOf(value) === -1
+    };
+  },
+  computesRequired: true,
+  message: 'Este campo é obrigatório!'
+});
+
+extend('minmax', {
+  validate(value, { min, max }) {
+    return value.length >= min && value.length <= max;
+  },
+  params: ['min', 'max'],
+  message:'O campo {_field_} deve possuir no mínimo {min} e no máximo {max} caracteres.'
+
+});
+
+Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
 
 new Vue({
   el: '#app',
